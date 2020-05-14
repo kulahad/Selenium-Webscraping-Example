@@ -6,16 +6,16 @@ from selenium.common.exceptions import TimeoutException
 
 # Specifying incognito mode as you launch your browser[OPTIONAL]
 option = webdriver.ChromeOptions()
+option.add_argument("--incognito")
 option.add_argument("--headless")
 
 # Create new Instance of Chrome in incognito mode
-browser = webdriver.Edge()
+browser = webdriver.Chrome(executable_path=r'D:/Projects/Python 3/chromedriver', chrome_options=option)
 
 # Go to desired website
 browser.get("https://github.com/TheDancerCodes")
-
 # Wait 20 seconds for page to load
-timeout = 50
+timeout = 20
 try:
     # Wait until the final element [Avatar link] is loaded.
     # Assumption: If Avatar link is loaded, the whole page would be relatively loaded because it is among
