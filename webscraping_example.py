@@ -6,21 +6,21 @@ from selenium.common.exceptions import TimeoutException
 
 # Specifying incognito mode as you launch your browser[OPTIONAL]
 option = webdriver.ChromeOptions()
-option.add_argument("--incognito")
+option.add_argument("--headless")
 
 # Create new Instance of Chrome in incognito mode
-browser = webdriver.Chrome(executable_path='/Library/Application Support/Google/chromedriver', chrome_options=option)
+browser = webdriver.Edge()
 
 # Go to desired website
 browser.get("https://github.com/TheDancerCodes")
 
 # Wait 20 seconds for page to load
-timeout = 20
+timeout = 50
 try:
     # Wait until the final element [Avatar link] is loaded.
     # Assumption: If Avatar link is loaded, the whole page would be relatively loaded because it is among
     # the last things to be loaded.
-    WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//img[@class='avatar width-full rounded-2']")))
+    WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//img[@class='avatar width-full height-full rounded-2']")))
 except TimeoutException:
     print("Timed out waiting for page to load")
     browser.quit()
@@ -30,7 +30,7 @@ except TimeoutException:
 # with selenium elements of the titles.
 
 # find_elements_by_xpath - Returns an array of selenium objects.
-titles_element = browser.find_elements_by_xpath("//a[@class='text-bold']")
+titles_element = browser.find_elements_by_xpath("//a[@class='text-bold flex-auto min-width-0 ']")
 
 # List Comprehension to get the actual repo titles and not the selenium objects.
 titles = [x.text for x in titles_element]
@@ -41,7 +41,7 @@ print(titles, '\n')
 
 
 # Get all of the pinned repo languages
-language_element = browser.find_elements_by_xpath("//p[@class='mb-0 f6 text-gray']")
+language_element = browser.find_elements_by_xpath("//span[@class='d-inline-block mr-3']")
 languages = [x.text for x in language_element] # same concept as for-loop/ list-comprehension above.
 
 # print response in terminal
